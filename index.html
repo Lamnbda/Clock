@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Clock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+</head>
+
+<body>
+    <header>
+        <div class="realTime">
+            <h1>Clock</h1>
+
+            <div class='container'>
+                <p>Currently the time is: </p>
+                <div id="rrealTime"></div>
+                <div id="rrrealTime"></div>
+                <button id="timeIn">Stop time</button>
+            </div>
+        </div>
+
+    </header>
+
+
+    <script>
+
+        function timez() {
+            var d = new Date(); //Date is an object or whatever and needs to be capitalized. 
+            var h = d.getHours(); //0-11
+            var m = d.getMinutes(); //0-59
+            var s = d.getSeconds(); //0-59
+            var session = "AM"
+            if (h == 0) {
+                h = 12;
+            }
+
+            if (h > 12) {
+                h = h - 12;
+                session = "PM"
+            }
+
+            h = (h < 10) ? "0" + h : h; //Another way to write if then statements.
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+
+
+            var timerss = h + ":" + m + ":" + s + " " + session;
+            document.getElementById("rrealTime").innerText = timerss; //does not work in ff
+            document.getElementById("rrealTime").innerContent = timerss;
+
+            setTimeout(timez, 1000);
+        };
+
+
+
+        function stopTime() {
+            var d = new Date(); //Date is an object or whatever and needs to be capitalized. 
+            var h = d.getHours(); //0-11
+            var m = d.getMinutes(); //0-59
+            var s = d.getSeconds();
+            var message = "The time was stopped at "
+            var session = "AM"
+
+          if (h == 0) {
+                h = 12;
+            }
+
+            if (h > 12) {
+                h = h - 12;
+                session = "PM"
+            }
+
+            h = (h < 10) ? "0" + h : h; //Another way to write if then statements.
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+
+
+            var div = document.getElementById("rrrealTime")
+            var setAlarm = document.getElementById("timeIn")
+            var timerss = h + ":" + m + ":" + s + " ";
+            setAlarm.onclick = function () {
+                div.innerHTML = message + timerss + session;
+                setTimeout(stopTime, 10);
+            }
+            
+        }
+
+
+        timez(); //Having this here prevents waiting a second to call a second. 
+            //setInterval(timez,1000); //This calls timez every 1 second. 
+            setInterval(stopTime,1000);
+    </script>
+
+
+</body>
+
+</html>
